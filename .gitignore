@@ -1,0 +1,10 @@
+# Build artifacts
+bin/
+obj/
+*.exe
+*.dll
+
+# User-specific files
+*.user
+*.suo
+*.vs/
