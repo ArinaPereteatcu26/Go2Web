@@ -1,0 +1,14 @@
+C:\Users\arina\go2web\bin\Debug\net8.0\go2web.exe
+C:\Users\arina\go2web\bin\Debug\net8.0\go2web.deps.json
+C:\Users\arina\go2web\bin\Debug\net8.0\go2web.runtimeconfig.json
+C:\Users\arina\go2web\bin\Debug\net8.0\go2web.dll
+C:\Users\arina\go2web\bin\Debug\net8.0\go2web.pdb
+C:\Users\arina\go2web\obj\Debug\net8.0\go2web.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\arina\go2web\obj\Debug\net8.0\go2web.AssemblyInfoInputs.cache
+C:\Users\arina\go2web\obj\Debug\net8.0\go2web.AssemblyInfo.cs
+C:\Users\arina\go2web\obj\Debug\net8.0\go2web.csproj.CoreCompileInputs.cache
+C:\Users\arina\go2web\obj\Debug\net8.0\go2web.dll
+C:\Users\arina\go2web\obj\Debug\net8.0\refint\go2web.dll
+C:\Users\arina\go2web\obj\Debug\net8.0\go2web.pdb
+C:\Users\arina\go2web\obj\Debug\net8.0\go2web.genruntimeconfig.cache
+C:\Users\arina\go2web\obj\Debug\net8.0\ref\go2web.dll

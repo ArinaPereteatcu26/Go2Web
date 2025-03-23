@@ -1,0 +1,2 @@
+C:\Users\arina\go2web\bin\Release\net6.0\win-x64\publish\go2web.pdb
+C:\Users\arina\go2web\bin\Release\net6.0\win-x64\publish\go2web.exe
