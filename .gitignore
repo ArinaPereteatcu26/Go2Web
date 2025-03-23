@@ -1,10 +1,11 @@
-# Build artifacts
+# Ignore IDE and editor settings
+.idea/
+.vs/
+*.user
+
+# Ignore build and output files
 bin/
 obj/
 *.exe
 *.dll
-
-# User-specific files
-*.user
-*.suo
-*.vs/
+*.pdb

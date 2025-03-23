@@ -11,6 +11,9 @@ namespace Go2Web
                 ShowHelp();
                 return;
             }
+            
+            string url = null;
+
 
             switch (args[0])
             {
@@ -24,6 +27,22 @@ namespace Go2Web
                     ShowHelp();
                     break;
             }
+            if (!string.IsNullOrEmpty(url))
+            {
+                // Handle URL fetching
+                Console.WriteLine($"Fetching: {url}\n");
+
+                try
+                {
+                    string response = await HttpFetcher.Fetch(url, contentType);
+                    Console.WriteLine($"Response from {url}:\n{response}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error fetching URL: {ex.Message}");
+                }
+            }
+            
         }
 
         static void ShowHelp()
