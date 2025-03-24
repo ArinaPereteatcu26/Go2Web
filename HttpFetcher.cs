@@ -94,7 +94,6 @@ namespace Go2Web
                     string location = ExtractLocationHeader(responseHtml);
                     if (!string.IsNullOrEmpty(location))
                     {
-                        // Recursively follow the redirect
                         return await Fetch(location, contentType);
                     }
                     else
