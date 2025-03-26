@@ -13,10 +13,8 @@ namespace Go2Web
     {
         public static string ExtractTextFromHtml(string html)
         {
-            // Remove all HTML tags 
             string noHtml = Regex.Replace(html, "<script.*?</script>|<style.*?</style>|<[^>]+?>", "", RegexOptions.Singleline);
-
-            // Decode HTML entities 
+            
             string extractedText = WebUtility.HtmlDecode(noHtml);
             
             extractedText = Regex.Replace(extractedText, @"[^\w\sĂăÂâÎîȘșŢţ]", "");
@@ -89,27 +87,31 @@ namespace Go2Web
 
                 string responseHtml = Encoding.ASCII.GetString(memoryStream.ToArray());
                 
-                if (responseHtml.Contains("301 Moved Permanently") || responseHtml.Contains("302 Found"))
+                // Extract headers and body
+                string[] responseParts = responseHtml.Split(new string[] { "\r\n\r\n" }, 2, StringSplitOptions.None);
+                if (responseParts.Length < 2)
                 {
-                    string location = ExtractLocationHeader(responseHtml);
-                    if (!string.IsNullOrEmpty(location))
+                    throw new Exception("Invalid HTTP response");
+                }
+                string headers = responseParts[0];
+                string body = responseParts[1];
+
+                // Handle Redirects
+                if (Regex.IsMatch(headers, @"HTTP/1\.\d 30[1278]"))
+                {
+                    string redirectUrl = GetRedirectLocation(headers, uri);
+                    if (!string.IsNullOrEmpty(redirectUrl))
                     {
-                        return await Fetch(location, contentType);
+                        Console.WriteLine($"Redirecting to: {redirectUrl}");
+                        return await Fetch(redirectUrl, contentType);
                     }
                     else
                     {
                         throw new Exception("Redirect location not found.");
                     }
                 }
-                if (string.IsNullOrEmpty(responseHtml) || !responseHtml.Contains("\r\n\r\n"))
-                {
-                    throw new Exception("Invalid or empty HTTP response.");
-                }
 
-          
-                string htmlContent = responseHtml.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None)[1];
-
-                return ExtractTextFromHtml(htmlContent);
+                return ExtractTextFromHtml(body);
             }
             catch (Exception ex)
             {
@@ -117,11 +119,20 @@ namespace Go2Web
             }
         }
         
-        private static string ExtractLocationHeader(string response)
+        
+        private static string GetRedirectLocation(string headers, Uri baseUri)
         {
-            string locationPattern = @"Location:\s*(http[s]?:\/\/[^\s]+)";
-            Match match = Regex.Match(response, locationPattern, RegexOptions.IgnoreCase);
-            return match.Success ? match.Groups[1].Value : string.Empty;
+            Match locationMatch = Regex.Match(headers, @"Location: (.+)", RegexOptions.IgnoreCase);
+            if (locationMatch.Success)
+            {
+                string redirectUrl = locationMatch.Groups[1].Value.Trim();
+                if (!redirectUrl.StartsWith("http"))
+                {
+                    redirectUrl = new Uri(baseUri, redirectUrl).ToString();
+                }
+                return redirectUrl;
+            }
+            return null;
         }
         
         private static string RemoveSessionIdentifiers(string text)

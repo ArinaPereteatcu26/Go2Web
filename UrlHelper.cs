@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Text.RegularExpressions;
 
 namespace Go2Web
@@ -22,4 +22,4 @@ namespace Go2Web
             return url.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
         }
     }
-}
+}*/
